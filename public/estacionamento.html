@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área - Estacionamento</title>
+    
+    <!-- Tailwind CSS (Framework de Estilo) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Nosso arquivo de CSS customizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Container -->
+    <div class="container mx-auto max-w-4xl p-4 sm:p-6">
+
+        <!-- Header -->
+        <header class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6 pb-4 border-b border-gray-200">
+            <div class="text-center sm:text-left">
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Área - Estacionamento</h1>
+                <p class="text-sm text-gray-500">Selecione um item para ver ou criar O.S.</p>
+            </div>
+             <!-- Link para voltar ao Dashboard -->
+            <a href="index.html" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-sm hover:bg-gray-300 transition-colors duration-300 w-full sm:w-auto text-center">
+                &larr; Voltar ao Dashboard
+            </a>
+        </header>
+
+        <!-- Área de Conteúdo Principal -->
+        <main id="items-container">
+            <!-- Os itens de manutenção serão gerados dinamicamente aqui pelo JavaScript -->
+        </main>
+
+    </div>
+
+    <!-- Script específico para esta página -->
+    <script src="script-piscinas.js"></script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pousada do Francês - Controle de O.S.</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Nosso CSS customizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Container Principal -->
+    <div class="container mx-auto max-w-7xl p-4 sm:p-6">
+        <!-- Cabeçalho -->
+        <header class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Pousada do Francês - Controle de O.S.</h1>
+            <button id="open-new-os-btn"
+                class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow hover:bg-blue-700 transition-colors duration-300 w-full sm:w-auto">
+                Nova Ordem de Serviço
+            </button>
+        </header>
+
+        <!-- Seção de Indicadores (KPIs) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div id="card-os-abertas"
+                class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-between cursor-pointer hover:ring-blue-500 transition-colors">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Total de O.S. Abertas</p>
+                    <p id="kpi-os-abertas" class="text-3xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M6 16h.01" />
+                    </svg>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Prioridade Alta</p>
+                    <p id="kpi-prioridade-alta" class="text-3xl font-bold text-red-600">0</p>
+                </div>
+                <div class="bg-red-100 text-red-600 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Concluídas Hoje</p>
+                    <p id="kpi-concluidas-hoje" class="text-3xl font-bold text-green-600">0</p>
+                </div>
+                <div class="bg-green-100 text-green-600 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Navegação -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Visualizar Plantas e Áreas</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="predio-principal.html"
+                    class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-center text-lg font-semibold text-blue-600 hover:bg-blue-50 transition-colors">Prédio
+                    Nice &rarr;</a>
+                <a href="predio-anexo.html"
+                    class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-center text-lg font-semibold text-blue-600 hover:bg-blue-50 transition-colors">Prédio
+                    Paris &rarr;</a>
+                <a href="piscinas.html"
+                    class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-center text-lg font-semibold text-green-600 hover:bg-green-50 transition-colors">Piscinas
+                    &rarr;</a>
+                <a href="estacionamento.html"
+                    class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-center text-lg font-semibold text-green-600 hover:bg-green-50 transition-colors">Estacionamento
+                    &rarr;</a>
+                <a href="cozinha.html"
+                    class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-center text-lg font-semibold text-green-600 hover:bg-green-50 transition-colors">Cozinha
+                    &rarr;</a>
+                <a href="area-externa.html"
+                    class="bg-white p-6 rounded-xl shadow-sm flex items-center justify-center text-lg font-semibold text-green-600 hover:bg-green-50 transition-colors">Área
+                    Externa &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Lista de O.S. -->
+        <section class="bg-white p-6 rounded-xl shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">O.S. Recentes</h2>
+                <button id="show-all-btn" class="hidden text-sm font-semibold text-blue-600 hover:underline">Mostrar
+                    Todas &times;</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Local/Apto</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Descrição</th>
+
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Prioridade</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Data Criação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="os-table-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Linhas preenchidas pelo Firebase -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para NOVA Ordem de Serviço -->
+    <div id="new-os-modal" class="modal-overlay hidden">
+        <div class="modal-content w-full max-w-lg bg-white rounded-xl shadow-xl p-6 sm:p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Criar Nova Ordem de Serviço</h2>
+                <button id="close-new-modal-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form id="new-os-form">
+                <div class="space-y-4">
+                    <div>
+                        <label for="os-location" class="block text-sm font-medium text-gray-700 mb-1">Local /
+                            Apartamento</label>
+                        <select id="os-location" name="location"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            required></select>
+                    </div>
+                    <div>
+                        <label for="os-description" class="block text-sm font-medium text-gray-700 mb-1">Descrição do
+                            Problema</label>
+                        <textarea id="os-description" name="description" rows="3"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Ex: Vazamento na pia do banheiro" required></textarea>
+                    </div>
+                    <div>
+                        <label for="os-priority" class="block text-sm font-medium text-gray-700 mb-1">Prioridade</p>
+                            <select id="os-priority" name="priority"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média" selected>Média</option>
+                                <option value="Alta">Alta</option>
+                            </select>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end gap-4">
+                    <button type="button" id="cancel-new-btn"
+                        class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
+                    <button type="submit"
+                        class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Salvar
+                        O.S.</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para EDITAR Ordem de Serviço -->
+    <div id="edit-os-modal" class="modal-overlay hidden">
+        <div class="modal-content w-full max-w-lg bg-white rounded-xl shadow-xl p-6 sm:p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Detalhes da Ordem de Serviço</h2>
+                <button id="close-edit-modal-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form id="edit-os-form">
+                <input type="hidden" id="edit-os-id">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Local / Apartamento</label>
+                        <p id="edit-os-location" class="mt-1 text-lg font-semibold text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Descrição do Problema</label>
+                        <p id="edit-os-description" class="mt-1 text-gray-800 bg-gray-100 p-3 rounded-lg"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Prioridade</label>
+                        <p id="edit-os-priority" class="mt-1 text-gray-800"></p>
+                    </div>
+                    <div>
+                        <label for="edit-os-status" class="block text-sm font-medium text-gray-700 mb-1">Alterar
+                            Status</label>
+                        <select id="edit-os-status" name="status"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                            <option value="Aberta">Aberta</option>
+                            <option value="Em Andamento">Em Andamento</option>
+                            <option value="Concluída">Concluída</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end gap-4">
+                    <button type="button" id="cancel-edit-btn"
+                        class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
+                    <button type="submit"
+                        class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">Salvar
+                        Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+/* Define a fonte principal para todo o corpo da página */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Animação simples para os elementos aparecerem suavemente */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- ESTILOS DO MODAL --- */
+
+/* Fundo escurecido que cobre a tela inteira */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(17, 24, 39, 0.6); /* bg-gray-900 com 60% de opacidade */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    padding: 1rem;
+    /* Animação de fade-in para o fundo */
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Animação para o conteúdo do modal aparecer com um leve zoom */
+.modal-content {
+    animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
