@@ -65,6 +65,65 @@
         </div>
     </div>
 
+    <!-- Modal para EDITAR Ordem de Serviço -->
+    <div id="edit-os-modal" class="modal-overlay hidden">
+        <div class="modal-content w-full max-w-lg bg-white rounded-xl shadow-xl p-6 sm:p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Detalhes da Ordem de Serviço</h2>
+                <button id="close-edit-modal-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <form id="edit-os-form">
+                <input type="hidden" id="edit-os-id">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Local / Apartamento</label>
+                        <p id="edit-os-location" class="mt-1 text-lg font-semibold text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Descrição do Problema</label>
+                        <p id="edit-os-description" class="mt-1 text-gray-800 bg-gray-100 p-3 rounded-lg"></p>
+                    </div>
+
+                    <!-- MOSTRA A FOTO NO MODAL EDIÇÃO DE OS -->
+                    <div id="edit-os-photo-container" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700">Foto Anexada</label>
+                        <a id="edit-os-photo-link" href="#" target="_blank" rel="noopener noreferrer">
+                            <img id="edit-os-photo-img" src="" alt="Foto da Ordem de Serviço"
+                                class="mt-1 w-full rounded-lg border border-gray-200">
+                        </a>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Prioridade</label>
+                        <p id="edit-os-priority" class="mt-1 text-gray-800"></p>
+                    </div>
+                    <div>
+                        <label for="edit-os-status" class="block text-sm font-medium text-gray-700 mb-1">Alterar
+                            Status</label>
+                        <select id="edit-os-status" name="status"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                            <option value="Aberta">Aberta</option>
+                            <option value="Em Andamento">Em Andamento</option>
+                            <option value="Concluída">Concluída</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end gap-4">
+                    <button type="button" id="cancel-edit-btn"
+                        class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
+                    <button type="submit"
+                        class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">Salvar
+                        Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <!-- Script específico para esta página -->
     <script src="script-predio.js" type="module"></script>

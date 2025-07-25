@@ -25,6 +25,10 @@ const closeModalBtn = document.getElementById('close-view-modal-btn');
 const modalAptNumber = document.getElementById('modal-apt-number');
 const modalOsList = document.getElementById('modal-os-list');
 
+// --- Elementos do DOM para o Modal de Edição ---
+const editOsModal = document.getElementById('edit-os-modal');
+const closeEditModalBtn = document.getElementById('close-edit-modal-btn');
+
 // --- DADOS ESTRUTURAIS DO PRÉDIO ---
 const building = {
     name: "Prédio Principal",
@@ -127,6 +131,12 @@ async function showOsForApartment(locationId, aptNumberText) {
                     <span class="text-gray-500">${os.createdAt ? os.createdAt.toDate().toLocaleDateString('pt-BR') : ''}</span>
                 </div>
             `;
+
+            osCard.classList.add('cursor-pointer', 'hover:bg-gray-50'); // Torna-o visualmente clicável
+            osCard.addEventListener('click', () => {
+                openEditModal(doc.id, os);
+            });
+
             modalOsList.appendChild(osCard);
         });
 
@@ -230,6 +240,53 @@ viewOsModal?.addEventListener('click', (event) => {
     // Fecha o modal apenas se o clique for no fundo escuro (o overlay)
     if (event.target === viewOsModal) {
         viewOsModal.classList.add('hidden');
+    }
+});
+
+/**
+ * Abre o modal de detalhes/edição e preenche com os dados da O.S.
+ * @param {string} id - O ID do documento da O.S. no Firestore.
+ * @param {object} osData - Os dados da O.S.
+ */
+function openEditModal(id, osData) {
+    if (!editOsModal) return;
+
+    const photoContainer = document.getElementById('edit-os-photo-container');
+    const photoLink = document.getElementById('edit-os-photo-link');
+    const photoImg = document.getElementById('edit-os-photo-img');
+
+    document.getElementById('edit-os-id').value = id;
+    document.getElementById('edit-os-location').textContent = osData.locationName;
+    document.getElementById('edit-os-description').textContent = osData.description;
+    document.getElementById('edit-os-priority').textContent = osData.priority;
+    document.getElementById('edit-os-status').value = osData.status;
+
+    if (osData.photoURL && osData.photoURL !== "") {
+        photoImg.src = osData.photoURL;
+        photoLink.href = osData.photoURL;
+        photoContainer.classList.remove('hidden');
+    } else {
+        photoContainer.classList.add('hidden');
+    }
+
+    // Esconde o formulário de edição de status, pois aqui é só visualização
+    const statusSelect = document.getElementById('edit-os-status');
+    const formActions = editOsModal.querySelector('.flex.justify-end');
+    if (statusSelect) statusSelect.parentElement.style.display = 'none';
+    if (formActions) formActions.style.display = 'none';
+
+
+    editOsModal.classList.remove('hidden');
+}
+
+// --- Event Listeners para o Modal de Edição ---
+closeEditModalBtn?.addEventListener('click', () => {
+    editOsModal.classList.add('hidden');
+});
+
+editOsModal?.addEventListener('click', (event) => {
+    if (event.target === editOsModal) {
+        editOsModal.classList.add('hidden');
     }
 });
 
