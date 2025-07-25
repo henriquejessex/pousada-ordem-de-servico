@@ -251,15 +251,10 @@ viewOsModal?.addEventListener('click', (event) => {
 function openEditModal(id, osData) {
     if (!editOsModal) return;
 
+    // --- Lógica para a FOTO DO PROBLEMA (já existente) ---
     const photoContainer = document.getElementById('edit-os-photo-container');
     const photoLink = document.getElementById('edit-os-photo-link');
     const photoImg = document.getElementById('edit-os-photo-img');
-
-    document.getElementById('edit-os-id').value = id;
-    document.getElementById('edit-os-location').textContent = osData.locationName;
-    document.getElementById('edit-os-description').textContent = osData.description;
-    document.getElementById('edit-os-priority').textContent = osData.priority;
-    document.getElementById('edit-os-status').value = osData.status;
 
     if (osData.photoURL && osData.photoURL !== "") {
         photoImg.src = osData.photoURL;
@@ -269,12 +264,35 @@ function openEditModal(id, osData) {
         photoContainer.classList.add('hidden');
     }
 
-    // Esconde o formulário de edição de status, pois aqui é só visualização
+    // --- ADICIONE ESTE NOVO BLOCO DE CÓDIGO ---
+    // Lógica para a FOTO DE CONCLUSÃO
+    const completedPhotoContainer = document.getElementById('edit-os-completed-photo-container');
+    const completedPhotoLink = document.getElementById('edit-os-completed-photo-link');
+    const completedPhotoImg = document.getElementById('edit-os-completed-photo-img');
+
+    if (osData.completedPhotoURL && osData.completedPhotoURL !== "") {
+        completedPhotoImg.src = osData.completedPhotoURL;
+        completedPhotoLink.href = osData.completedPhotoURL;
+        completedPhotoContainer.classList.remove('hidden');
+    } else {
+        completedPhotoContainer.classList.add('hidden');
+    }
+    // --- FIM DO NOVO BLOCO ---
+
+    // Preenche o resto dos campos
+    document.getElementById('edit-os-id').value = id;
+    document.getElementById('edit-os-location').textContent = osData.locationName;
+    document.getElementById('edit-os-description').textContent = osData.description;
+    document.getElementById('edit-os-priority').textContent = osData.priority;
+
+    // Esconde a parte de edição, pois aqui é só visualização
     const statusSelect = document.getElementById('edit-os-status');
     const formActions = editOsModal.querySelector('.flex.justify-end');
-    if (statusSelect) statusSelect.parentElement.style.display = 'none';
-    if (formActions) formActions.style.display = 'none';
-
+    if (statusSelect) {
+        statusSelect.value = osData.status; // Mostra o status atual
+        statusSelect.parentElement.style.display = 'none'; // Mas esconde o dropdown
+    }
+    if (formActions) formActions.style.display = 'none'; // Esconde os botões de salvar/cancelar
 
     editOsModal.classList.remove('hidden');
 }

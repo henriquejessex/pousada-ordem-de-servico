@@ -219,6 +219,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-os-priority').textContent = osData.priority;
         document.getElementById('edit-os-status').value = osData.status;
 
+        // ... (depois de preencher os campos do modal) ...
+
+        const statusSelect = document.getElementById('edit-os-status');
+        const completedPhotoUploadContainer = document.getElementById('completed-photo-upload-container');
+
+        // Mostra/esconde o campo de upload de foto de conclusão
+        statusSelect.addEventListener('change', () => {
+            if (statusSelect.value === 'Concluída') {
+                completedPhotoUploadContainer.classList.remove('hidden');
+            } else {
+                completedPhotoUploadContainer.classList.add('hidden');
+            }
+        });
+
         // Lógica para mostrar a foto
         if (osData.photoURL && osData.photoURL !== "") {
             // Se existe um URL de foto...
@@ -228,6 +242,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Se não existe um URL de foto...
             photoContainer.classList.add('hidden'); // Garante que o contentor está escondido
+        }
+
+        const completedPhotoContainer = document.getElementById('edit-os-completed-photo-container');
+        const completedPhotoLink = document.getElementById('edit-os-completed-photo-link');
+        const completedPhotoImg = document.getElementById('edit-os-completed-photo-img');
+
+        if (osData.completedPhotoURL && osData.completedPhotoURL !== "") {
+            completedPhotoImg.src = osData.completedPhotoURL;
+            completedPhotoLink.href = osData.completedPhotoURL;
+            completedPhotoContainer.classList.remove('hidden');
+        } else {
+            completedPhotoContainer.classList.add('hidden');
         }
 
         // Mostra o modal
@@ -296,14 +322,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    editOsForm?.addEventListener('submit', (event) => {
+    editOsForm?.addEventListener('submit', async (event) => { // <-- Adicionado 'async'
         event.preventDefault();
-        const id = document.getElementById('edit-os-id').value;
-        const newStatus = {
-            status: document.getElementById('edit-os-status').value
-        };
-        updateOS(id, newStatus);
-        closeEditModal();
+
+        const submitButton = editOsForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'A Guardar...';
+
+        try {
+            const id = document.getElementById('edit-os-id').value;
+            const newStatus = document.getElementById('edit-os-status').value;
+            const completedPhotoFile = document.getElementById('os-completed-photo').files[0];
+
+            let updatedData = {
+                status: newStatus
+            };
+
+            // Se o status for "Concluída", adiciona a data de conclusão
+            if (newStatus === 'Concluída') {
+                updatedData.completedAt = serverTimestamp();
+            }
+
+            // Se uma foto de conclusão foi enviada, faz o upload
+            if (completedPhotoFile) {
+                const filePath = `os-completed-photos/${Date.now()}-${completedPhotoFile.name}`;
+                const storageRef = ref(storage, filePath);
+                const snapshot = await uploadBytes(storageRef, completedPhotoFile);
+                const completedPhotoURL = await getDownloadURL(snapshot.ref);
+
+                // Adiciona o URL da foto de conclusão aos dados a serem atualizados
+                updatedData.completedPhotoURL = completedPhotoURL;
+            }
+
+            await updateOS(id, updatedData);
+            closeEditModal();
+
+        } catch (error) {
+            console.error("Erro ao atualizar a O.S.:", error);
+            alert("Ocorreu um erro ao atualizar a O.S.");
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Salvar Alterações';
+        }
     });
 
     openNewOsBtn?.addEventListener('click', openNewModal);
