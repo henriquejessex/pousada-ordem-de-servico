@@ -175,6 +175,20 @@
                                 <option value="Alta">Alta</option>
                             </select>
                     </div>
+                    <div>
+                        <label for="os-materiais" class="block text-sm font-medium text-gray-700 mb-1">Materiais
+                            Necessários (Opcional)</label>
+                        <textarea id="os-materiais" name="materiais" rows="3"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Ex: 2x Lâmpadas LED, 1x Disjuntor 10A"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="os-prazo" class="block text-sm font-medium text-gray-700 mb-1">Prazo Final
+                            (Opcional)</label>
+                        <input type="date" id="os-prazo" name="prazoFinal"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </div>
                     <!-- ... (Upload de fotos) ... -->
                     <div>
                         <label for="os-photo" class="block text-sm font-medium text-gray-700 mb-1">Anexar Foto
@@ -232,6 +246,16 @@
                         <label class="block text-sm font-medium text-gray-700">Prioridade</label>
                         <p id="edit-os-priority" class="mt-1 text-gray-800"></p>
                     </div>
+                    <div id="edit-os-materiais-container" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700">Materiais Necessários</label>
+                        <p id="edit-os-materiais"
+                            class="mt-1 text-gray-800 bg-gray-100 p-3 rounded-lg whitespace-pre-wrap"></p>
+                    </div>
+
+                    <div id="edit-os-prazo-container" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700">Prazo Final</label>
+                        <p id="edit-os-prazo" class="mt-1 text-lg font-semibold text-red-600"></p>
+                    </div>
                     <div>
                         <label for="edit-os-status" class="block text-sm font-medium text-gray-700 mb-1">Alterar
                             Status</label>
@@ -242,7 +266,7 @@
                             <option value="Concluída">Concluída</option>
                         </select>
                     </div>
-                    
+
 
                     <!-- ADICIONA FOTO DO PROBLEMA -->
                     <div id="completed-photo-upload-container" class="hidden">

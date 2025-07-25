@@ -256,6 +256,30 @@ document.addEventListener('DOMContentLoaded', () => {
             completedPhotoContainer.classList.add('hidden');
         }
 
+        // --- Lógica para Materiais e Prazo Final ---
+        const materiaisContainer = document.getElementById('edit-os-materiais-container');
+        const materiaisText = document.getElementById('edit-os-materiais');
+        const prazoContainer = document.getElementById('edit-os-prazo-container');
+        const prazoText = document.getElementById('edit-os-prazo');
+
+        // Mostra os materiais se existirem
+        if (osData.materiais && osData.materiais.trim() !== "") {
+            materiaisText.textContent = osData.materiais;
+            materiaisContainer.classList.remove('hidden');
+        } else {
+            materiaisContainer.classList.add('hidden');
+        }
+
+        // Mostra o prazo se existir
+        if (osData.prazoFinal) {
+            // Formata a data para o formato local (dd/mm/yyyy)
+            const dataFormatada = new Date(osData.prazoFinal).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+            prazoText.textContent = dataFormatada;
+            prazoContainer.classList.remove('hidden');
+        } else {
+            prazoContainer.classList.add('hidden');
+        }
+
         // Mostra o modal
         editOsModal.classList.remove('hidden');
     }
@@ -303,7 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 priority: newOsForm.priority.value,
                 status: 'Aberta',
                 createdAt: serverTimestamp(),
-                photoURL: photoURL // Guarda o link da foto no banco de dados
+                photoURL: photoURL, // Guarda o link da foto no banco de dados
+                materiais: newOsForm.materiais.value,
+                prazoFinal: newOsForm.prazoFinal.value
             };
 
             // Passo 3: Salva a O.S. completa no Firestore
