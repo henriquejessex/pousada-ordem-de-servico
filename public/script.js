@@ -1,6 +1,7 @@
 // Importa as funções do Firebase que vamos usar
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 // =================================================================================
 // COLOQUE A SUA CONFIGURAÇÃO DO FIREBASE AQUI
@@ -21,6 +22,7 @@ let todasAsOrdens = []; // Guarda a lista completa de O.S.
 // Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -204,34 +206,94 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeNewModal() { newOsModal?.classList.add('hidden'); }
     function openEditModal(id, osData) {
         if (!editOsModal) return;
+
+        // Obtém os elementos do modal de edição
+        const photoContainer = document.getElementById('edit-os-photo-container');
+        const photoLink = document.getElementById('edit-os-photo-link');
+        const photoImg = document.getElementById('edit-os-photo-img');
+
+        // Preenche os campos de texto como antes
         document.getElementById('edit-os-id').value = id;
         document.getElementById('edit-os-location').textContent = osData.locationName;
         document.getElementById('edit-os-description').textContent = osData.description;
         document.getElementById('edit-os-priority').textContent = osData.priority;
         document.getElementById('edit-os-status').value = osData.status;
+
+        // Lógica para mostrar a foto
+        if (osData.photoURL && osData.photoURL !== "") {
+            // Se existe um URL de foto...
+            photoImg.src = osData.photoURL;      // Define a fonte da imagem
+            photoLink.href = osData.photoURL;    // Define o link para abrir em nova aba
+            photoContainer.classList.remove('hidden'); // Mostra o contentor da imagem
+        } else {
+            // Se não existe um URL de foto...
+            photoContainer.classList.add('hidden'); // Garante que o contentor está escondido
+        }
+
+        // Mostra o modal
         editOsModal.classList.remove('hidden');
     }
+
     function closeEditModal() { editOsModal?.classList.add('hidden'); }
 
     // --- EVENT LISTENERS ---
-    newOsForm?.addEventListener('submit', (event) => {
+    newOsForm?.addEventListener('submit', async (event) => { // <-- Adicionado 'async'
         event.preventDefault();
+
+        const submitButton = newOsForm.querySelector('button[type="submit"]');
         const selectedOption = locationSelect.options[locationSelect.selectedIndex];
         if (!selectedOption || selectedOption.value === "") {
             alert("Por favor, selecione um local.");
             return;
         }
-        const newOS = {
-            locationId: locationSelect.value,
-            locationName: selectedOption.text,
-            description: newOsForm.description.value,
-            priority: newOsForm.priority.value,
-            status: 'Aberta',
-            createdAt: serverTimestamp()
-        };
-        saveOS(newOS);
-        newOsForm.reset();
-        closeNewModal();
+
+        const photoFile = document.getElementById('os-photo').files[0];
+        let photoURL = ""; // Começa com URL vazia por defeito
+
+        // Desativa o botão e mostra um feedback ao utilizador
+        submitButton.disabled = true;
+        submitButton.textContent = 'A Guardar...';
+
+        try {
+            // Passo 1: Se o utilizador selecionou uma foto, faz o upload
+            if (photoFile) {
+                // Cria um nome de ficheiro único para evitar que uma foto substitua outra
+                const filePath = `os-photos/${Date.now()}-${photoFile.name}`;
+                const storageRef = ref(storage, filePath);
+
+                // Envia o ficheiro para o Firebase Storage
+                const snapshot = await uploadBytes(storageRef, photoFile);
+
+                // Pega no link público (URL) da imagem que acabámos de enviar
+                photoURL = await getDownloadURL(snapshot.ref);
+                console.log("Foto enviada com sucesso:", photoURL);
+            }
+
+            // Passo 2: Cria o objeto da O.S. com o link da foto (se existir)
+            const newOS = {
+                locationId: locationSelect.value,
+                locationName: selectedOption.text,
+                description: newOsForm.description.value,
+                priority: newOsForm.priority.value,
+                status: 'Aberta',
+                createdAt: serverTimestamp(),
+                photoURL: photoURL // Guarda o link da foto no banco de dados
+            };
+
+            // Passo 3: Salva a O.S. completa no Firestore
+            await saveOS(newOS);
+
+            newOsForm.reset();
+            closeNewModal();
+
+        } catch (error) {
+            console.error("Erro no processo de criação da O.S.:", error);
+            alert("Ocorreu um erro ao criar a O.S. Verifique a consola.");
+        } finally {
+            // Restaura o botão, quer o processo tenha sucesso ou falhe
+            submitButton.disabled = false;
+            submitButton.textContent = 'Salvar O.S.';
+        }
     });
 
     editOsForm?.addEventListener('submit', (event) => {

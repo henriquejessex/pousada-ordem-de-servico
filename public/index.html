@@ -175,6 +175,14 @@
                                 <option value="Alta">Alta</option>
                             </select>
                     </div>
+                    <!-- ... (Upload de fotos) ... -->
+                    <div>
+                        <label for="os-photo" class="block text-sm font-medium text-gray-700 mb-1">Anexar Foto
+                            (Opcional)</label>
+                        <input type="file" id="os-photo" name="photo" accept="image/*"
+                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                    </div>
+
                 </div>
                 <div class="mt-8 flex justify-end gap-4">
                     <button type="button" id="cancel-new-btn"
@@ -210,6 +218,15 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Descrição do Problema</label>
                         <p id="edit-os-description" class="mt-1 text-gray-800 bg-gray-100 p-3 rounded-lg"></p>
+                    </div>
+
+                    <!-- MOSTRA A FOTO NO MODAL EDIÇÃO DE OS -->
+                    <div id="edit-os-photo-container" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700">Foto Anexada</label>
+                        <a id="edit-os-photo-link" href="#" target="_blank" rel="noopener noreferrer">
+                            <img id="edit-os-photo-img" src="" alt="Foto da Ordem de Serviço"
+                                class="mt-1 w-full rounded-lg border border-gray-200">
+                        </a>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Prioridade</label>
