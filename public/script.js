@@ -1,6 +1,6 @@
 // Importa as funções do Firebase que vamos usar
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 // =================================================================================
@@ -166,6 +166,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /**
+ * Apaga uma O.S. do Firestore.
+ * @param {string} id - O ID do documento a ser apagado.
+ */
+    async function deleteOS(id) {
+        if (!id) {
+            console.error("ID inválido para apagar.");
+            return;
+        }
+        const osDocRef = doc(db, 'ordens_de_servico', id);
+        try {
+            await deleteDoc(osDocRef);
+            alert("Ordem de Serviço apagada com sucesso!");
+        } catch (error){
+        console.error("Erro ao apagar a O.S.: ", error);
+        alert("Ocorreu um erro ao apagar a O.S.");
+        }
+    }
+
     function populateLocations() {
         if (!locationSelect) return;
         locationSelect.innerHTML = '<option value="" disabled selected>Selecione um local...</option>';
@@ -279,6 +298,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             prazoContainer.classList.add('hidden');
         }
+
+        // --- Lógica para o Botão de Apagar ---
+    const deleteBtn = document.getElementById('delete-os-btn');
+
+    // Esta é uma forma de garantir que não adicionamos múltiplos listeners ao mesmo botão
+    const newDeleteBtn = deleteBtn.cloneNode(true);
+    deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
+
+    newDeleteBtn.addEventListener('click', () => {
+        // Passo 2: Pedir confirmação
+        if (confirm("Tem a certeza de que deseja apagar esta Ordem de Serviço? Esta ação não pode ser desfeita.")) {
+            // Passo 3: Chamar a função para apagar
+            deleteOS(id);
+            // Passo 4: Fechar o modal
+            closeEditModal();
+        }
+    });
 
         // Mostra o modal
         editOsModal.classList.remove('hidden');
