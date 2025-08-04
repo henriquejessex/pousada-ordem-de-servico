@@ -22,14 +22,14 @@ const db = getFirestore(app);
 
 // --- DADOS DA ÁREA DA PISCINA (Vêm da fonte da verdade) ---
 // Passo 1: Encontra o objeto do grupo correto, que se chama 'Piscinas'.
-const piscinaData = allLocations.find(group => group.group === 'Piscinas');
+const cozinhaData = allLocations.find(group => group.group === 'Cozinha');
 
 // Passo 2: Pega na lista de 'items' diretamente desse objeto.
-const piscinaItems = piscinaData ? piscinaData.items : []; // Se o grupo for encontrado, pega nos items; senão, retorna uma lista vazia.
+const cozinhaItems = cozinhaData ? cozinhaData.items : []; // Se o grupo for encontrado, pega nos items; senão, retorna uma lista vazia.
 
 const area = {
-    name: "Piscinas",
-    items: piscinaItems
+    name: "Cozinha",
+    items: cozinhaItems
 };
 
 // --- Elementos dos Modais ---

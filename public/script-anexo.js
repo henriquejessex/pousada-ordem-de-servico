@@ -2,6 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import { allLocations } from './config.js';
+
 // =================================================================================
 // COLOQUE A SUA CONFIGURAÇÃO DO FIREBASE AQUI
 // =================================================================================
@@ -29,13 +31,16 @@ const modalOsList = document.getElementById('modal-os-list');
 const editOsModal = document.getElementById('edit-os-modal');
 const closeEditModalBtn = document.getElementById('close-edit-modal-btn');
 
-// --- DADOS ESTRUTURAIS DO PRÉDIO ---
+
+// --- DADOS ESTRUTURAIS DO PRÉDIO (Agora vêm da nossa fonte da verdade) ---
+// Encontra o objeto do grupo correto, que se chama 'Prédio Principal'.
+const predioAnexoData = allLocations.find(group => group.group === 'Prédio Anexo');
+
+// Cria a variável 'building' que o resto do script espera, usando os dados encontrados.
 const building = {
     name: "Prédio Anexo",
-    floors: [
-        { name: "1º Andar", level: 1, apartments: 12 },
-        { name: "Térreo", level: 0, apartments: 6 },
-    ]
+    // Se encontrou os dados, usa os andares de lá; senão, usa uma lista vazia para evitar erros.
+    floors: predioAnexoData ? predioAnexoData.floors : []
 };
 
 

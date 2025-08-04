@@ -1,7 +1,6 @@
 // Importa as ferramentas necessárias do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 import { allLocations } from './config.js';
 
 // =================================================================================
@@ -21,15 +20,15 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // --- DADOS DA ÁREA DA PISCINA (Vêm da fonte da verdade) ---
-// Passo 1: Encontra o objeto do grupo correto, que se chama 'Piscinas'.
-const piscinaData = allLocations.find(group => group.group === 'Piscinas');
+// Passo 1: Encontra o objeto do grupo correto, que se chama 'Área Externa'.
+const areaData = allLocations.find(group => group.group === 'Área Externa');
 
 // Passo 2: Pega na lista de 'items' diretamente desse objeto.
-const piscinaItems = piscinaData ? piscinaData.items : []; // Se o grupo for encontrado, pega nos items; senão, retorna uma lista vazia.
+const areaItems = areaData ? areaData.items : []; // Se o grupo for encontrado, pega nos items; senão, retorna uma lista vazia.
 
 const area = {
-    name: "Piscinas",
-    items: piscinaItems
+    name: "Área Externa",
+    items: areaItems
 };
 
 // --- Elementos dos Modais ---

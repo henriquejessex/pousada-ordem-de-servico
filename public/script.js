@@ -3,6 +3,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
+import { allLocations } from './config.js';
+
 // =================================================================================
 // COLOQUE A SUA CONFIGURAÇÃO DO FIREBASE AQUI
 // =================================================================================
@@ -48,28 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
     const editOsForm = document.getElementById('edit-os-form');
 
-    // --- DADOS PARA PREENCHER O DROPDOWN DE LOCAIS ---
-    const allLocations = [
-        {
-            group: 'Prédio Principal',
-            floors: [{ level: 2, apartments: 13 }, { level: 1, apartments: 13 }, { level: 0, apartments: 13 }]
-        },
-        {
-            group: 'Prédio Anexo',
-            floors: [{ level: 1, apartments: 12 }, { level: 0, apartments: 6 }]
-        },
-        {
-            group: 'Áreas Comuns',
-            items: [
-                { id: "piscina-adulto-bomba", name: "Piscina - Bomba Adulto" },
-                { id: "piscina-adulto-aquecedor", name: "Piscina - Aquecedor Adulto" },
-                { id: "sauna-umida", name: "Área Lazer - Sauna Úmida" },
-                { id: "estacionamento-portao", name: "Estacionamento - Portão" },
-                { id: "cozinha-fogao", name: "Cozinha - Fogão Industrial" },
-                { id: "area-externa-jardim", name: "Área Externa - Jardim Principal" },
-            ]
-        }
-    ];
+
 
     // --- FUNÇÕES ---
 
@@ -179,9 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             await deleteDoc(osDocRef);
             alert("Ordem de Serviço apagada com sucesso!");
-        } catch (error){
-        console.error("Erro ao apagar a O.S.: ", error);
-        alert("Ocorreu um erro ao apagar a O.S.");
+        } catch (error) {
+            console.error("Erro ao apagar a O.S.: ", error);
+            alert("Ocorreu um erro ao apagar a O.S.");
         }
     }
 
@@ -300,21 +281,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Lógica para o Botão de Apagar ---
-    const deleteBtn = document.getElementById('delete-os-btn');
+        const deleteBtn = document.getElementById('delete-os-btn');
 
-    // Esta é uma forma de garantir que não adicionamos múltiplos listeners ao mesmo botão
-    const newDeleteBtn = deleteBtn.cloneNode(true);
-    deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
+        // Esta é uma forma de garantir que não adicionamos múltiplos listeners ao mesmo botão
+        const newDeleteBtn = deleteBtn.cloneNode(true);
+        deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
 
-    newDeleteBtn.addEventListener('click', () => {
-        // Passo 2: Pedir confirmação
-        if (confirm("Tem a certeza de que deseja apagar esta Ordem de Serviço? Esta ação não pode ser desfeita.")) {
-            // Passo 3: Chamar a função para apagar
-            deleteOS(id);
-            // Passo 4: Fechar o modal
-            closeEditModal();
-        }
-    });
+        newDeleteBtn.addEventListener('click', () => {
+            // Passo 2: Pedir confirmação
+            if (confirm("Tem a certeza de que deseja apagar esta Ordem de Serviço? Esta ação não pode ser desfeita.")) {
+                // Passo 3: Chamar a função para apagar
+                deleteOS(id);
+                // Passo 4: Fechar o modal
+                closeEditModal();
+            }
+        });
 
         // Mostra o modal
         editOsModal.classList.remove('hidden');
