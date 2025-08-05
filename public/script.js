@@ -50,6 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
     const editOsForm = document.getElementById('edit-os-form');
 
+    // constante para o novo campo de pesquisa
+    const searchInput = document.getElementById('search-input');
+
+    // ... (depois da constante cardOsAbertas) ...
+    const cardPrioridadeAlta = document.getElementById('card-prioridade-alta');
+    const cardConcluidasHoje = document.getElementById('card-concluidas-hoje');
+
+
 
 
     // --- FUNÇÕES ---
@@ -430,6 +438,50 @@ document.addEventListener('DOMContentLoaded', () => {
         renderOSTable(todasAsOrdens);
         showAllBtn.classList.add('hidden'); // Esconde o botão
     });
+
+    // --- Event Listener para a Barra de Pesquisa ---
+    searchInput?.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase(); // Pega no texto e converte para minúsculas
+
+        // Filtra a nossa lista principal de O.S.
+        const filteredOrders = todasAsOrdens.filter(doc => {
+            const os = doc.data();
+            // Converte os dados da O.S. para minúsculas para uma pesquisa não sensível a maiúsculas/minúsculas
+            const location = os.locationName.toLowerCase();
+            const description = os.description.toLowerCase();
+            const status = os.status.toLowerCase();
+
+            // Retorna verdadeiro se o termo de pesquisa estiver incluído em qualquer um dos campos
+            return location.includes(searchTerm) ||
+                description.includes(searchTerm) ||
+                status.includes(searchTerm);
+        });
+
+        // Renderiza a tabela apenas com os resultados filtrados
+        renderOSTable(filteredOrders);
+    });
+
+    // --- Event Listener para o Card de Prioridade Alta ---
+    cardPrioridadeAlta?.addEventListener('click', () => {
+        // Filtra a lista para mostrar apenas as com prioridade "Alta"
+        const osPrioridadeAlta = todasAsOrdens.filter(doc => doc.data().priority === 'Alta');
+        renderOSTable(osPrioridadeAlta);
+        showAllBtn?.classList.remove('hidden'); // Mostra o botão para limpar o filtro
+    });
+
+    // --- Event Listener para o Card de Concluídas Hoje ---
+    cardConcluidasHoje?.addEventListener('click', () => {
+        const hoje = new Date().toDateString();
+        // Filtra a lista para mostrar apenas as concluídas hoje
+        const osConcluidasHoje = todasAsOrdens.filter(doc => {
+            const os = doc.data();
+            return os.status === 'Concluída' && os.completedAt && os.completedAt.toDate().toDateString() === hoje;
+        });
+        renderOSTable(osConcluidasHoje);
+        showAllBtn?.classList.remove('hidden'); // Mostra o botão para limpar o filtro
+    });
+
+
 
     // --- INICIALIZAÇÃO ---
     populateLocations();
