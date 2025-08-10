@@ -24,11 +24,23 @@
     <div class="container mx-auto max-w-7xl p-4 sm:p-6">
         <!-- Cabeçalho -->
         <header class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Pousada do Francês - Controle de O.S.</h1>
-            <button id="open-new-os-btn"
-                class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow hover:bg-blue-700 transition-colors duration-300 w-full sm:w-auto">
-                Nova Ordem de Serviço
-            </button>
+            <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <!-- Novo contentor para os botões -->
+            <div class="flex items-center gap-4">
+                <button id="open-new-os-btn"
+                    class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow hover:bg-blue-700 transition-colors duration-300">
+                    + Nova Ordem de Serviço
+                </button>
+                <button id="logout-btn"
+                    class="p-3 text-red-600 hover:text-red-500 hover:bg-gray-200 rounded-full transition-colors"
+                    title="Sair">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
         </header>
 
         <!-- Seção de Indicadores (KPIs) com Novo Design -->
@@ -120,18 +132,6 @@
                     <span class="text-sm">Piscinas</span>
                 </a>
 
-                <!-- Botão Estacionamento -->
-                <a href="estacionamento.html"
-                    class="bg-white p-4 rounded-xl shadow-sm flex flex-col items-center justify-center text-center font-semibold text-green-600 hover:bg-green-50 hover:shadow-md hover:scale-105 transform transition-all duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V8.618a1 1 0 01.553-.894L9 5l6 2.724a1 1 0 01.447.894v7.764a1 1 0 01-.553.894L9 20z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span class="text-sm">Estacionamento</span>
-                </a>
 
                 <!-- Botão Cozinha -->
                 <a href="cozinha.html"

@@ -1,8 +1,8 @@
 // Importa as funções do Firebase que vamos usar
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; // <-- Adicionado onAuthStateChanged
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
 import { allLocations } from './config.js';
 
 // =================================================================================
@@ -25,8 +25,28 @@ let todasAsOrdens = []; // Guarda a lista completa de O.S.
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app); // <-- Adicionado
 
-document.addEventListener('DOMContentLoaded', () => {
+// --- LÓGICA DE SEGURANÇA (O "SEGURANÇA" NA PORTA) ---
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // O utilizador está autenticado. Pode continuar.
+        console.log("Utilizador autenticado:", user.email);
+        // O código para inicializar o dashboard só corre se o utilizador estiver logado.
+        initializeDashboard();
+    } else {
+        // O utilizador não está autenticado. Redireciona para a página de login.
+        console.log("Nenhum utilizador autenticado. A redirecionar para o login.");
+        window.location.href = 'login.html';
+    }
+});
+
+
+// --- INICIALIZAÇÃO DO DASHBOARD (Agora dentro de uma função) ---
+function initializeDashboard() {
+
+
+    //document.addEventListener('DOMContentLoaded', () => { -->
 
     // --- ELEMENTOS DO DOM ---
     const osTableBody = document.getElementById('os-table-body');
@@ -52,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // constante para o novo campo de pesquisa
     const searchInput = document.getElementById('search-input');
+
+    // ... (depois da constante searchInput) ...
+    const logoutBtn = document.getElementById('logout-btn');
 
     // ... (depois da constante cardOsAbertas) ...
     const cardPrioridadeAlta = document.getElementById('card-prioridade-alta');
@@ -460,6 +483,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Renderiza a tabela apenas com os resultados filtrados
         renderOSTable(filteredOrders);
     });
+    // --- Event Listener para o Botão de Logout ---
+    logoutBtn?.addEventListener('click', () => {
+        signOut(auth).then(() => {
+            // Logout bem-sucedido.
+            console.log("Utilizador desautenticado com sucesso.");
+            // Redireciona para a página de login (o nosso segurança onAuthStateChanged faria isto, mas é bom garantir)
+            window.location.href = 'login.html';
+        }).catch((error) => {
+            // Ocorreu um erro durante o logout.
+            console.error("Erro ao fazer logout:", error);
+            alert("Ocorreu um erro ao tentar sair. Tente novamente.");
+        });
+    });
 
     // --- Event Listener para o Card de Prioridade Alta ---
     cardPrioridadeAlta?.addEventListener('click', () => {
@@ -486,4 +522,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INICIALIZAÇÃO ---
     populateLocations();
     fetchAndDisplayOS();
-});
+    //});
+}

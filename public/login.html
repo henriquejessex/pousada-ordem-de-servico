@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Controle de O.S.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+    <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+        <!-- ADICIONANDO O LOGO DA POUSADA -->
+        <div>
+            <img src="https://firebasestorage.googleapis.com/v0/b/pousada-os-app.firebasestorage.app/o/logo%20pousada.webp?alt=media&token=7890f988-cd09-4697-ae9a-e2453b318bc2"
+                alt="Logo da Pousada do Francês" class="mx-auto h-40 w-auto mb-4">
+        </div>
+        <h1 class="text-3xl font-bold text-center text-gray-900 mb-2">Controle de Ordem de Serviço</h1>
+        <p class="text-center text-gray-500 mb-8">Pousada do Francês - Bertioga</p>
+
+        <form id="login-form">
+            <div class="space-y-6">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700">Nome de Utilizador</label>
+                    <input type="text" id="username" name="username" required
+                        class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                    <input type="password" id="password" name="password" required
+                        class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">Entrar</button>
+            </div>
+        </form>
+        <p id="error-message" class="mt-4 text-center text-red-600 text-sm"></p>
+    </div>
+
+    <script src="auth.js" type="module"></script>
+</body>
+
+</html>
